@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wiley Journal Finder &middot; Marine / Aquaculture / Environmental Memory</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1>Wiley Journal Finder</h1>
+      <p class="subtitle">Hybrid Open Access + Gold Open Access journals, ranked against your research themes &middot; UW / BTAA 2026-2027 agreement aware.</p>
+    </div>
+    <div class="topbar-right">
+      <input
+        id="searchBox"
+        type="search"
+        placeholder="Search title or subject..."
+        autocomplete="off"
+      />
+      <button id="resetBtn" type="button" title="Reset all filters">Reset</button>
+    </div>
+  </header>
+
+  <section class="agreement" aria-label="UW / BTAA Wiley open-access agreement">
+    <div class="agreement-row">
+      <div class="agreement-headline">
+        <strong>UW &middot; BTAA Wiley Open-Access Agreement</strong>
+        <span class="agreement-sub">For affiliated UW corresponding authors. Verify before submission.</span>
+      </div>
+      <div class="agreement-stats" id="agreementStats"></div>
+    </div>
+    <details class="agreement-details">
+      <summary>Details, deadlines, and resources</summary>
+      <div class="agreement-body">
+        <ul>
+          <li><strong>Reading:</strong> Full read access to all Wiley Online Library journals.</li>
+          <li><strong>Hybrid OA ("Online Open"):</strong> Unlimited, uncapped APC coverage for articles <em>accepted</em> by <strong>Dec 31, 2027</strong>. Author publication agreement must also be signed by that date.</li>
+          <li><strong>Gold (Fully) OA:</strong> Limited allocation. Coverage <em>guaranteed</em> for manuscripts <em>submitted</em> by <strong>Aug 31, 2026</strong>. After that, allocation may be exhausted and authors should expect to pay the APC themselves &mdash; UW Libraries has no central fund for individual APCs.</li>
+          <li><strong>Eligibility:</strong> Corresponding author must be UW-affiliated. Use your <code>@uw.edu</code> email at submission.</li>
+        </ul>
+        <p class="agreement-links">
+          <a href="https://lib.uw.edu/research-services/publishing/sharing-and-publishing-your-work/article-processing-fees/" target="_blank" rel="noopener">UW Libraries APC Support</a>
+          &nbsp;&middot;&nbsp;
+          <a href="https://lib.uw.edu/2026/04/24/2026-2027-open-access-publishing-agreement-with-wiley/" target="_blank" rel="noopener">2026-2027 Wiley agreement announcement</a>
+          &nbsp;&middot;&nbsp;
+          <a href="https://btaa.org/library/open-scholarship/agreements/wiley-open-access-agreement" target="_blank" rel="noopener">BTAA Wiley page</a>
+          &nbsp;&middot;&nbsp;
+          Questions: <a href="mailto:sustainablescholarship@uw.edu">sustainablescholarship@uw.edu</a>
+        </p>
+      </div>
+    </details>
+  </section>
+
+  <main class="layout">
+    <aside class="sidebar" aria-label="Filters and scoring">
+      <section class="panel">
+        <h2>Research themes</h2>
+        <p class="hint">Toggle the themes that matter most for this submission. Each chip adds weighted keywords to the relevance score.</p>
+        <div id="themeChips" class="chips"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Free-form keywords</h2>
+        <p class="hint">Comma-separated. These words are matched against title and subject (word-boundary, case-insensitive).</p>
+        <textarea id="freeKeywords" rows="3" placeholder="oyster, methylation, ocean acidification, hypoxia, microbiome"></textarea>
+      </section>
+
+      <section class="panel">
+        <h2>Filters</h2>
+
+        <label class="field">
+          <span>Journal type</span>
+          <select id="typeFilter">
+            <option value="both">Both (Hybrid + Gold OA)</option>
+            <option value="hybrid">Hybrid OA only</option>
+            <option value="gold">Gold OA only</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>License contains</span>
+          <select id="licenseFilter">
+            <option value="any">Any</option>
+            <option value="CC BY">CC BY</option>
+            <option value="CC BY-NC">CC BY-NC</option>
+            <option value="CC BY-NC-ND">CC BY-NC-ND</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Currency</span>
+          <select id="currency">
+            <option value="usd">USD ($)</option>
+            <option value="gbp">GBP (&pound;)</option>
+            <option value="eur">EUR (&euro;)</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Max APC: <strong id="maxApcLabel">no cap</strong></span>
+          <input id="maxApc" type="range" min="0" max="6000" step="100" value="6000" />
+        </label>
+
+        <label class="field">
+          <span>Subject contains</span>
+          <input id="subjectFilter" type="text" list="subjectList" placeholder="e.g. Marine, Aquaculture, Ecology" />
+          <datalist id="subjectList"></datalist>
+        </label>
+
+        <label class="field">
+          <span>Sort by</span>
+          <select id="sortBy">
+            <option value="relevance">Relevance</option>
+            <option value="title">Title (A-Z)</option>
+            <option value="apcAsc">APC (low to high)</option>
+            <option value="apcDesc">APC (high to low)</option>
+          </select>
+        </label>
+
+        <label class="checkbox">
+          <input id="hideZero" type="checkbox" checked />
+          <span>Hide journals with zero relevance</span>
+        </label>
+
+        <label class="checkbox">
+          <input id="btaaOnly" type="checkbox" />
+          <span>Only show journals currently covered by UW/BTAA</span>
+        </label>
+
+        <label class="checkbox">
+          <input id="useEffectiveApc" type="checkbox" checked />
+          <span>Use BTAA-effective APC (covered = $0) for sorting &amp; cap</span>
+        </label>
+      </section>
+
+      <section class="panel meta">
+        <div id="counts" class="counts"></div>
+      </section>
+    </aside>
+
+    <section class="results" aria-label="Results">
+      <div class="results-header">
+        <div id="status" class="status"></div>
+        <div class="legend">
+          <span class="badge hybrid">Hybrid</span>
+          <span class="badge gold">Gold OA</span>
+        </div>
+      </div>
+      <ol id="resultList" class="result-list"></ol>
+      <div id="loadMoreWrap" class="load-more-wrap" hidden>
+        <button id="loadMoreBtn" type="button">Show more</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Data: <code>Wiley-Journal-APCs-OnlineOpen.xlsx</code> + <code>Wiley-Journal-APCs-Open-Access.xlsx</code>. Rebuild with <code>python3 build_data.py</code>.</span>
+  </footer>
+
+  <script src="journals.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
