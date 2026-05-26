@@ -637,10 +637,22 @@ function init() {
   buildThemeChips();
   fillSubjectDatalist();
   wireControls();
+  wireSidebarToggle();
   updateMaxApcLabel();
   renderAgreementStats();
   document.getElementById("freeKeywords").value = "";
   render();
+}
+
+function wireSidebarToggle() {
+  const toggle = document.getElementById("sidebarToggle");
+  const sidebar = document.getElementById("filterSidebar");
+  if (!toggle || !sidebar) return;
+
+  toggle.addEventListener("click", () => {
+    const isOpen = sidebar.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  });
 }
 
 document.addEventListener("DOMContentLoaded", init);

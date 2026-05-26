@@ -54,7 +54,17 @@
   </section>
 
   <main class="layout">
-    <aside class="sidebar" aria-label="Filters and scoring">
+    <button
+      type="button"
+      class="sidebar-toggle"
+      id="sidebarToggle"
+      aria-expanded="false"
+      aria-controls="filterSidebar"
+    >
+      Filters &amp; Scoring
+      <span class="toggle-arrow">&#9660;</span>
+    </button>
+    <aside class="sidebar" id="filterSidebar" aria-label="Filters and scoring">
       <section class="panel">
         <h2>Research themes</h2>
         <p class="hint">Toggle the themes that matter most for this submission. Each chip adds weighted keywords to the relevance score.</p>
