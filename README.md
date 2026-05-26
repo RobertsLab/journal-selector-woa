@@ -1,5 +1,7 @@
 # Wiley Journal Finder
 
+**Live site:** [https://robertslab.github.io/journal-selector-woa/](https://robertslab.github.io/journal-selector-woa/)
+
 An interactive, single-page website for picking a Wiley journal that fits a
 marine-organism / environmental-memory research program. It loads the two
 Wiley APC spreadsheets (1,869 journals total, Hybrid OA + Gold OA), scores
@@ -25,7 +27,7 @@ day-countdowns to each deadline.
 
 ## Open the site
 
-Either:
+Use the [live site](https://robertslab.github.io/journal-selector-woa/), or run locally:
 
 ```bash
 open index.html        # macOS - opens directly in your browser
