@@ -115,6 +115,7 @@ The banner at the top of the page links to:
 - [UW Libraries APC Support](https://lib.uw.edu/research-services/publishing/sharing-and-publishing-your-work/article-processing-fees/)
 - [UW announcement of the 2026-2027 Wiley agreement](https://lib.uw.edu/2026/04/24/2026-2027-open-access-publishing-agreement-with-wiley/)
 - [BTAA Wiley Open Access Agreement page](https://btaa.org/library/open-scholarship/agreements/wiley-open-access-agreement)
+- [Wiley Journal Finder by abstract](https://www.wiley.com/en-us/journal-finder/abstract/)
 - Contact: <sustainablescholarship@uw.edu>
 
 Eligibility requires you to be the corresponding author on a UW
